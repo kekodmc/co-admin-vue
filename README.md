@@ -1,4 +1,4 @@
-co-admin-vue
+co-admin-vue 响应式管理后台
 ===============
 
 配合项目[co-admin-api](https://github.com/kekodmc/co-admin-api)一起使用
