@@ -4,9 +4,9 @@ co-admin-vue
 配合项目[co-admin-api](https://github.com/kekodmc/co-admin-api)一起使用
 ===============
 
-> 基于 vue 2.0+
-> UI基于 [vuetifyjs] (https://github.com/vuetifyjs/vuetify).
-> 富文本基于 [tinymce5] (https://github.com/tinymce/tinymce).
+> 基于 vue 2.0+ <br/>
+> UI基于 [vuetifyjs] (https://github.com/vuetifyjs/vuetify) <br/>
+> 富文本基于 [tinymce5] (https://github.com/tinymce/tinymce) <br/>
 
 # show
 
