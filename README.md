@@ -21,10 +21,10 @@ yarn install
 
 ### 开发环境 Compiles and hot-reloads for development
 ```
-yarn run serve
+yarn serve
 ```
 
 ### 打包 Compiles and minifies for production
 ```
-yarn run build
+yarn build
 ```
