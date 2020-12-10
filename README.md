@@ -16,6 +16,13 @@ yarn install
 ```
 配置 .env.dev 和 .env.prod 文件的 VUE_APP_BASE_URL 参数为您的请求地址
 ```
+### history 路由模式需要配置 nginx
+```
+location / {
+		        try_files $uri $uri/ /index.html;
+		        expires 30s;
+}
+```
 
 ## 使用 How To Use
 
