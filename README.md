@@ -51,4 +51,6 @@ yarn build
 
 ![富文本框](https://raw.githubusercontent.com/kekodmc/co-admin-vue/master/public/tinymce.gif)
 
+## 支持作者 Support
 
+![支持作者](http://co-admin.kekodmc.com/support.png)
