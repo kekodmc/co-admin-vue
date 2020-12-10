@@ -32,14 +32,14 @@ yarn build
 
 ### 主题更换
 
-![主题更换](/public/theme.gif)
+![主题更换](https://raw.githubusercontent.com/kekodmc/co-admin-vue/master/public/theme.gif)
 
 ### 响应式UI
 
-![响应式UI](/public/responsive.gif)
+![响应式UI](https://raw.githubusercontent.com/kekodmc/co-admin-vue/master/public/responsive.gif)
 
 ### 富文本框 
 
-![富文本框](/public/tinymce.gif)
+![富文本框](https://raw.githubusercontent.com/kekodmc/co-admin-vue/master/public/tinymce.gif)
 
 
