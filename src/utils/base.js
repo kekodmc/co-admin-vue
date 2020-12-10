@@ -50,7 +50,7 @@ export function getPassword(password) {
 }
 //跳转登录
 export function toLogin() {
-    window.location.hash='/login'
+    window.location.href='/login'
 }
 //数组去重
 export function removeRepeatArray(arr) {
