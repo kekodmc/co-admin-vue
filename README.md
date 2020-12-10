@@ -30,7 +30,7 @@ yarn build
 ```
 ## 演示 demo
 
-查看[演示网址 DEMO](http://co-admin.kekodmc.com)
+查看<a href="http://co-admin.kekodmc.com" target="_blank">演示网址 DEMO</a>
 
 ### 主题更换
 
