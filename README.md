@@ -53,4 +53,4 @@ yarn build
 
 ## 支持作者 Support
 
-![支持作者](http://co-admin.kekodmc.com/support.png)
+![支持作者](http://co-admin.kekodmc.com/support1.png)
