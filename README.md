@@ -30,6 +30,8 @@ yarn build
 ```
 ## 演示 demo
 
+查看[演示网址 DEMO](http://co-admin.kekodmc.com)
+
 ### 主题更换
 
 ![主题更换](https://raw.githubusercontent.com/kekodmc/co-admin-vue/master/public/theme.gif)
