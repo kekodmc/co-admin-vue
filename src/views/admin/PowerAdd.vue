@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card  :loading="loading">
+        <v-card :loading="loading" style="max-width: 500px">
         <v-card-text>
 
 

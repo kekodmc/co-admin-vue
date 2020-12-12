@@ -58,6 +58,7 @@
                             登 录
                         </v-btn>
                     </v-form>
+                    <v-subheader>测试账号：demo 123456</v-subheader>
                 </v-card-text>
             </v-card>
         </v-container>
@@ -104,6 +105,7 @@
                         that.loading=false
                         setToken(res.data.token)
                         setData('power',res.data.power.join(','))
+                        setData('user',JSON.stringify(res.data))
                         setData('avatar',res.data.avatar)
                         if(that.checkbox){
                             setData('username',that.form.username)

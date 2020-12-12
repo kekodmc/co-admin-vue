@@ -48,15 +48,6 @@
                        </v-list-item-group>
                    </template>
                 </v-list>
-
-                <template v-slot:append>
-                    <div class="pa-2">
-                        <v-btn block color="error" @click="logout">
-                            <v-icon>mdi-power</v-icon>
-                            退出登录
-                        </v-btn>
-                    </div>
-                </template>
             </v-navigation-drawer>
 
             <v-app-bar
@@ -69,22 +60,83 @@
                         style="cursor: pointer"
                         @click="toHome"
                         class="mx-4"
-                        size="30"
+                        size="25"
                         rounded
                 >
                     <v-img src="/favicon.ico"></v-img>
                 </v-avatar>
                 <v-toolbar-title class="mr-12 align-center" @click="toHome" style="cursor: pointer">
-                    <span class="title">管理后台</span>
+                    <span class="title">{{$route.meta.title}}</span>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-switch
-                        v-model="$vuetify.theme.dark"
-                        label="暗色"
-                        color="indigo"
-                        hide-details
-                        @change="changeTheme"
-                ></v-switch>
+                <v-menu
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :nudge-width="200"
+                        offset-x
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                                icon
+                                v-bind="attrs"
+                                v-on="on"
+                        >
+                            <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-card>
+                        <v-list>
+                            <v-list-item @click="toAccount">
+                                <v-list-item-avatar>
+                                    <img
+                                            :src="user.avatar"
+                                            :alt="user.username"
+                                    >
+                                </v-list-item-avatar>
+
+                                <v-list-item-content>
+                                    <v-list-item-title>{{user.username}}</v-list-item-title>
+                                    <v-list-item-subtitle>{{user.role_name}}</v-list-item-subtitle>
+                                </v-list-item-content>
+
+                                <v-list-item-action>
+                                    <v-btn
+                                            icon
+                                    >
+                                        <v-icon>mdi-cog</v-icon>
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+
+                        <v-divider></v-divider>
+
+                        <v-list>
+                            <v-list-item>
+                                <v-list-item-title>暗色主题</v-list-item-title>
+                                <v-list-item-action>
+                                    <v-switch
+                                            v-model="$vuetify.theme.dark"
+                                            label=""
+                                            color="indigo"
+                                            hide-details
+                                            @change="changeTheme"
+                                    ></v-switch>
+                                </v-list-item-action>
+                            </v-list-item>
+
+                        </v-list>
+                        <v-list-item @click="logout">
+                            <v-list-item-title>退出登录</v-list-item-title>
+                            <v-list-item-action>
+                                <v-btn icon color="error">
+                                    <v-icon>mdi-power</v-icon>
+                                </v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-card>
+                </v-menu>
             </v-app-bar>
 
             <v-main class="pl-0">
@@ -124,8 +176,21 @@
                 del:false,
                 disable:false,
             },
+            user:{
+                avatar:'',
+                username:'',
+                role_name:'',
+            },
+            menu:false,
         }),
         created () {
+            let str=getData('user')
+            if(str){
+                let user=JSON.parse(str)
+                this.user.username=user.username
+                this.user.avatar=user.avatar
+                this.user.role_name=user.role_name
+            }
             let name=this.$route.name.split('-')
             this.checkPower(name[0])
         },
@@ -135,6 +200,7 @@
                     this.$service.common.logout({})
                     setToken('')
                     setData('power','')
+                    setData('user','')
                     this.$toast.success('退出登录成功')
                     this.$router.push('/')
                 })
@@ -158,6 +224,10 @@
                 }else{
                     setData('theme','')
                 }
+            },
+            toAccount(){
+                this.menu=false
+                this.$router.push({name:'account-info'})
             },
         },
         watch:{

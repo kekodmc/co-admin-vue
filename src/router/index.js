@@ -5,10 +5,12 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import {getToken} from "../utils/base";
 import common from './common'
+import account from './account'
 
 Vue.use(VueRouter)
 
 const routes = [
+    ...account,
     ...common,
 ]
 
