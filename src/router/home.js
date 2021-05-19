@@ -9,6 +9,7 @@ export default [
         meta:{
             icon:'mdi-chart-tree',
             title:'概览',
+            color:'error',
         },
         component:Layout,
         children:[

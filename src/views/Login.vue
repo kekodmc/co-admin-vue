@@ -50,8 +50,9 @@
 
                         <v-btn
                                 :disabled="!valid"
-                                style="width: 100%"
+                                block
                                 class="mr-4"
+                                color="primary"
                                 @click="validate"
                                 :loading="loading"
                         >

@@ -111,31 +111,27 @@
             },
             //获取数据
             getData(){
-                const that=this
-                that.loading=true
+                this.loading=true
                 this.$service.admin.info(this.form).then(res=>{
-                    that.loading=false
-                    that.form=res.data
+                    this.loading=false
+                    this.form=res.data
                     if(res.data.status==1){
-                        that.switch1=false
+                        this.switch1=false
                     }else{
-                        that.switch1=true
+                        this.switch1=true
                     }
                 }).catch(e=>{
-                    that.loading=false
+                    this.loading=false
                 })
             },
         },
-        created(){
+        async created(){
             if(this.$route.params.id){
                 this.form.id=this.$route.params.id
                 this.getData()
             }
-            this.$service.admin.role().then(res=>{
-                this.items=res.data.list
-            }).catch(e=>{
-
-            })
+            let res=await this.$service.admin.role().catch(e=>{})
+            this.items=res.data.list
         }
     }
 </script>

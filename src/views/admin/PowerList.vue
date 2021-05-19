@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card>
+        <v-card color="success">
             <v-card-title>
                 <v-btn
                         v-if="$op.save()"
@@ -35,6 +35,7 @@
                             v-if="item.type==0"
                             class="ma-2"
                             color="success"
+                            outlined
                     >
                         权限
                     </v-chip>
@@ -43,6 +44,7 @@
                             v-else
                             class="ma-2"
                             color="primary"
+                            outlined
                     >
                         模块
                     </v-chip>
@@ -115,14 +117,13 @@
         },
         methods: {
             getData(){
-                const that=this
-                that.loading=true
+                this.loading=true
                 this.$service.power.list(this.form).then(res=>{
-                    that.dataList=res.data.list
-                    that.total=res.data.total
-                    that.loading=false
+                    this.dataList=res.data.list
+                    this.total=res.data.total
+                    this.loading=false
                 }).catch(e=>{
-                    that.loading=false
+                    this.loading=false
                 })
             },
             toAdd(){

@@ -22,6 +22,10 @@ Vue.prototype.$service=service
 import {checkPower} from "./utils/power";
 checkPower()
 
+//添加全局组件
+import CDatePicker from "./views/com/DatePicker";
+Vue.component('CDatePicker',CDatePicker)
+
 new Vue({
   router,
   store,

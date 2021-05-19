@@ -8,25 +8,30 @@
             >
                 <v-list>
                    <template v-for="(item,index) in $store.state.menuList" v-if="!item.hidden">
-                       <v-list-item-group v-model="selectName">
+                       <v-list-item-group
+                           v-model="selectName">
                            <v-list-item
                                    v-if="item.children.length==1"
                                    :key="index"
                                    :value="item.children[0].name"
                                    :to="{name:item.children[0].name}"
+                                   :color="item.meta.color||'info'"
                            >
                                <v-list-item-icon>
-                                   <v-icon>{{item.meta.icon}}</v-icon>
+                                   <v-icon  :color="item.meta.color||''">{{item.meta.icon}}</v-icon>
                                </v-list-item-icon>
 
                                <v-list-item-title>{{item.children[0].meta.title}}</v-list-item-title>
                            </v-list-item>
                            <v-list-group
                                    v-else
-                                   :value="true"
-                                   :prepend-icon="item.meta.icon"
+                                   :value="checkSelect(item)"
                                    no-action
+                                   :color="item.meta.color||'info'"
                            >
+                               <template v-slot:prependIcon>
+                                 <v-icon :color="item.meta.color||''">{{item.meta.icon}}</v-icon>
+                               </template>
                                <template v-slot:activator>
                                    <v-list-item-content>
                                        <v-list-item-title v-text="item.meta.title"></v-list-item-title>
@@ -163,6 +168,7 @@
                     update:()=>this.op.update,
                     del:()=>this.op.del,
                     disable:()=>this.op.disable,
+                    custom:(arr)=>this.customPower(arr),
                 }
             }
         },
@@ -228,6 +234,36 @@
             toAccount(){
                 this.menu=false
                 this.$router.push({name:'account-info'})
+            },
+            //自定义权限
+            customPower(data){
+              // data=['page1',['module','page2']]
+              let result=[]
+              let name=this.$route.name.split('-')[0]
+              let power=getData('power')
+              if(!power)return result
+              let powerList=power.split(',')
+              for (let i in data){
+                if(data[i] instanceof Array){
+                  result.push(powerList.indexOf(data[i][0]+'-'+data[i][1])>=0)
+                }else{
+                  result.push(powerList.indexOf(name+'-'+data[i])>=0)
+                }
+              }
+              return result
+            },
+            //判断是否展开二级菜单
+            checkSelect(item){
+              let arr=[]
+              if(item.children){
+                for (let i in item.children){
+                  arr.push(item.children[i].name)
+                }
+              }
+              if(arr.indexOf(this.selectName)>=0){
+                return true;
+              }
+              return false;
             },
         },
         watch:{

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card>
+        <v-card color="success">
             <v-card-title>
                 <v-btn
                         v-if="$op.save()"
@@ -11,20 +11,22 @@
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-row style="max-width: 600px">
-                    <v-col cols="6">
+                  <v-col cols="12" sm="6">
+                    <c-date-picker v-model="form.date"></c-date-picker>
+                  </v-col>
+                    <v-col cols="12" sm="6">
                         <v-text-field
                                 v-model="form.username"
                                 label="登录名"
                                 single-line
                                 hide-details
-                                append-icon="mdi-magnify"
-                                @click:append="doSearch"
-                        ></v-text-field>
+                        >
+                          <template v-slot:append>
+                            <v-btn :loading="loading" small icon @click="doSearch"><v-icon>mdi-magnify</v-icon></v-btn>
+                          </template>
+                        </v-text-field>
                     </v-col>
                 </v-row>
-                <v-btn :loading="loading" icon @click="doSearch">
-                    <v-icon>sync</v-icon>
-                </v-btn>
             </v-card-title>
             <v-data-table
                     :headers="headers"
@@ -50,6 +52,7 @@
                             small
                             v-if="item.status==0"
                             class="ma-2"
+                            outlined
                     >
                         已禁用
                     </v-chip>
@@ -58,11 +61,22 @@
                             v-else
                             class="ma-2"
                             color="success"
+                            outlined
                     >
                         正常
                     </v-chip>
                 </template>
                 <template v-slot:item.actions="{ item }">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                      <v-btn icon v-on="on" @click="toMore(item)">
+                        <v-icon>
+                          mdi-dots-horizontal
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>更多信息</span>
+                  </v-tooltip>
                     <v-tooltip top v-if="$op.update()">
                         <template v-slot:activator="{ on }">
                             <v-btn icon color="warning" v-on="on" @click="toEdit(item)">
@@ -109,13 +123,16 @@
                 </template>
             </v-data-table>
         </v-card>
+        <admin-info ref="info" @callback="callback"></admin-info>
     </div>
 </template>
 
 <script>
+    import AdminInfo from "./AdminInfo";
 
     export default {
         name: "AdminList",
+        components:{AdminInfo},
         inject:['$toast','$dialog','$op'],
         data: () => ({
             loading: true,
@@ -130,7 +147,7 @@
                 { text: '用户权限', sortable: false,value: 'role.name' },
                 { text: '状态', value: 'status' },
                 { text: '最近登录时间', value: 'login_time' },
-                { text: '创建时间', value: 'create_time' },
+                // { text: '创建时间', value: 'create_time' },
                 { text: '', value: 'actions', sortable: false },
             ],
             dataList:[],
@@ -140,6 +157,7 @@
                 page:1,
                 limit:10,
                 username:'',
+                date:[],
                 order:'create_time',
                 desc:'desc'
             },
@@ -149,21 +167,20 @@
         },
         methods: {
             getData(){
-                const that=this
-                that.loading=true
+                this.loading=true
                 this.$service.admin.list(this.form).then(res=>{
-                    that.dataList=res.data.list
-                    that.total=res.data.total
-                    that.loading=false
+                  this.dataList=res.data.list
+                  this.total=res.data.total
+                  this.loading=false
                 }).catch(e=>{
-                    that.loading=false
+                  this.loading=false
                 })
             },
             toAdd(){
                 this.$router.push({name:'admin-save'})
             },
             toMore(item){
-                this.$router.push({name:'OrderInfo',params:{id:item.id}})
+
             },
             toEdit(item){
                 this.$router.push({name:'admin-update',params:{id:item.id}})
@@ -223,6 +240,9 @@
                     this.form.desc=''
                 }
                 this.getData()
+            },
+            callback(data){
+              console.log('callback',data)
             }
         },
     }

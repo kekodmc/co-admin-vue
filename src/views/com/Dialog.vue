@@ -20,8 +20,8 @@
             <v-card-text>{{options.message}}</v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="doCancel">{{options.btn_cancel_txt}}</v-btn>
-                <v-btn :color="options.btn_confirm_color" v-if="options.type=='confirm'" @click="doConfirm">{{options.btn_confirm_txt}}</v-btn>
+                <v-btn text @click="doCancel">{{options.btn_cancel_txt}}</v-btn>
+                <v-btn text :color="options.btn_confirm_color" v-if="options.type=='confirm'" @click="doConfirm">{{options.btn_confirm_txt}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
